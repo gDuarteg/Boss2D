@@ -3,11 +3,32 @@
 public class PlayerController : MonoBehaviour {
     private float velocidade = 5.0f;
 
+    public int Vida { get; set; }
+
     GameManager gm;
 
     // Start is called before the first frame update
     void Start() {
         gm = GameManager.GetInstance();
+        if (gameObject.tag == "Player1") {
+            gm.player1 = this;
+        }
+        else if (gameObject.tag == "Player2") {
+            gm.player2 = this;
+        }
+        Vida = 5;
+    }
+
+    void Die() {
+        Destroy(gameObject);
+    }
+
+    public void OnHit() {
+        Vida--;
+
+        if (Vida <= 0) {
+            Die();
+        }
     }
 
     void Move() {

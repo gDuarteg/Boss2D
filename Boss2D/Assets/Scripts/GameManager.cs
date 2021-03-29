@@ -1,6 +1,8 @@
 ﻿public class GameManager {
 
     private static GameManager _instance;
+    public PlayerController player1 { get; set; }
+    public PlayerController player2 { get; set; }
 
     public enum PlayerTurn {
         PLAYER1, PLAYER2
