@@ -3,6 +3,8 @@
 public class PlayerController : MonoBehaviour {
     private float velocidade = 5.0f;
 
+    public GameObject tiro;
+
     public int Vida { get; set; }
 
     GameManager gm;
@@ -24,11 +26,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnHit() {
+        Debug.Log(Vida);
         Vida--;
 
         if (Vida <= 0) {
             Die();
         }
+    }
+
+    void Shoot() {
+        Instantiate(tiro , transform.position , Quaternion.identity);
     }
 
     void Move() {
@@ -42,6 +49,10 @@ public class PlayerController : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Shoot();
+        }
+
         if (gameObject.tag == "Player1" && gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
             Move();
         }
