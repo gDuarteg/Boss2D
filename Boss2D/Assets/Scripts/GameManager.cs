@@ -12,13 +12,12 @@
     }
     // Use this for initialization
     void Start() {
-        currentTurn = PlayerTurn.PLAYER1;
+        currentTurn = PlayerTurn.PLAYER2;
     }
 
-    // Update is called once per frame
-    void Update() {
+    //void Update() {
 
-    }
+    //}
     public static GameManager GetInstance() {
         if (_instance == null) {
             _instance = new GameManager();

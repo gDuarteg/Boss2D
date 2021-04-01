@@ -4,12 +4,17 @@ public class ShootController : MonoBehaviour {
 
     GameManager gm;
 
-    // Use this for initialization
+    private Vector3 shootDir;
+
+    public void Setup(Vector3 shootDir) {
+        this.shootDir = shootDir;
+    }
+
     void Start() {
         gm = GameManager.GetInstance();
         transform.position += new Vector3(1.1f , 0, 0);
     }
-    // Update is called once per frame
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (!( collision.gameObject is null )) {
             if (collision.CompareTag("Player1")) {
@@ -22,6 +27,7 @@ public class ShootController : MonoBehaviour {
     }
 
     private void Update() {
-        transform.position += new Vector3(5f , 0 , 0) * Time.deltaTime;
+        float moveSpeed = 10f;
+        transform.position += this.shootDir * moveSpeed * Time.deltaTime;
     }
 }
