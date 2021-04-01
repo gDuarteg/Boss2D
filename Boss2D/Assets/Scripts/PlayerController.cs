@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (gameObject.tag == "Player2") {
             gm.player2 = this;
+            gameObject.GetComponent<PlayerController>().enabled = false;
         }
         Vida = 5;
     }
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 
     void Shoot(Vector3 shootDirection) {
         GameObject bulletTransform = Instantiate(tiro, transform.position, Quaternion.identity);
-        
+
         ShootController bulletTeste = bulletTransform.GetComponent<ShootController>();
         bulletTeste.Setup(shootDirection);
 
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour {
     bool IsMyTurn() {
         if (gameObject.tag == "Player1" && gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
             return true;
+            
         }
         if (gameObject.tag == "Player2" && gm.currentTurn == GameManager.PlayerTurn.PLAYER2) {
             return true;
@@ -63,13 +65,17 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         if (!IsMyTurn()) return;
- 
-        Move();
 
+        Move();
+    
         // Shoot
         if (Input.GetButtonDown("Fire1")) {
-            Vector3 mousePos = Input.mousePosition;   
+            Vector3 mousePos = Input.mousePosition;
             Shoot(mousePos);
+            
+            gm.changeTurn();
         }
+
+
     }
 }

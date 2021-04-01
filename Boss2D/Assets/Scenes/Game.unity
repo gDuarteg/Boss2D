@@ -348,6 +348,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2598611308785508878, guid: c09332f8125433641bc58210505e82ed,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598611308785508878, guid: c09332f8125433641bc58210505e82ed,
+        type: 3}
       propertyPath: m_TagString
       value: Player2
       objectReference: {fileID: 0}
@@ -421,12 +426,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2598611308785508882, guid: c09332f8125433641bc58210505e82ed,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2598611308785508883, guid: c09332f8125433641bc58210505e82ed,
         type: 3}
       propertyPath: tiro
       value: 
       objectReference: {fileID: 36577206421440505, guid: 855e09fa91baac843892374fa3e5e39f,
         type: 3}
+    - target: {fileID: 2598611308785508883, guid: c09332f8125433641bc58210505e82ed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c09332f8125433641bc58210505e82ed, type: 3}
 --- !u!1001 &2598611309087737184
@@ -500,6 +515,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598611308785508882, guid: c09332f8125433641bc58210505e82ed,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2598611308785508883, guid: c09332f8125433641bc58210505e82ed,
         type: 3}

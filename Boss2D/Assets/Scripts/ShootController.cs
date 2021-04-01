@@ -27,7 +27,7 @@ public class ShootController : MonoBehaviour {
     }
 
     private void Update() {
-        float moveSpeed = 10f;
+        float moveSpeed = 0.010f;
         transform.position += this.shootDir * moveSpeed * Time.deltaTime;
     }
 }
