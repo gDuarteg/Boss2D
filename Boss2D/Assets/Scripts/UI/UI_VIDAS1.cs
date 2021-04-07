@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_VIDAS : MonoBehaviour
+public class UI_VIDAS1 : MonoBehaviour
 {
     Text textComp;
     GameManager gm;
@@ -17,6 +17,6 @@ public class UI_VIDAS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textComp.text = $"Player2: {gm.player2.Vida}";
+        textComp.text = $"Player1: {gm.player1.Vida}";
     }
 }
