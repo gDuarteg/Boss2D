@@ -23,10 +23,10 @@
         return _instance;
     }
 
-
     public void changeTurn() {
         if (currentTurn == PlayerTurn.PLAYER1) {
             currentTurn = PlayerTurn.PLAYER2;
+
             player2.gameObject.GetComponent<PlayerController>().enabled = true;
             player1.gameObject.GetComponent<PlayerController>().enabled = false;
         }

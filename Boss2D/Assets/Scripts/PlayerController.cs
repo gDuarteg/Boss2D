@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
 
     public int Vida { get; set; }
 
+    Vector3 mousePos;
+    Vector3 bulletInitPos;
+    
     GameManager gm;
 
     void Start() {
@@ -26,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnHit() {
-        Debug.Log(Vida);
+        //Debug.Log(Vida);
         Vida--;
 
         if (Vida <= 0) {
@@ -34,12 +37,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void Shoot(Vector3 shootDirection) {
-        GameObject bulletTransform = Instantiate(tiro, transform.position, Quaternion.identity);
+    void Shoot() {
+        mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
+        if (mousePos.x < transform.position.x) {
+            bulletInitPos = transform.position + new Vector3(-1.01f, 0, 0);
+        } else {
+            bulletInitPos = transform.position + new Vector3(1.01f, 0, 0);
+        }
+
+        GameObject bulletTransform = Instantiate(tiro, bulletInitPos, Quaternion.identity);
         ShootController bulletTeste = bulletTransform.GetComponent<ShootController>();
-        bulletTeste.Setup(shootDirection);
-
+        bulletTeste.Setup(mousePos - transform.position);
     }
 
     void Move() {
@@ -55,7 +65,6 @@ public class PlayerController : MonoBehaviour {
     bool IsMyTurn() {
         if (gameObject.tag == "Player1" && gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
             return true;
-            
         }
         if (gameObject.tag == "Player2" && gm.currentTurn == GameManager.PlayerTurn.PLAYER2) {
             return true;
@@ -65,13 +74,12 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         if (!IsMyTurn()) return;
-
+        
         Move();
-    
+        
         // Shoot
         if (Input.GetButtonDown("Fire1")) {
-            Vector3 mousePos = Input.mousePosition;
-            Shoot(mousePos);
+            Shoot();
             
             gm.changeTurn();
         }

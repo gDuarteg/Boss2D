@@ -6,13 +6,12 @@ public class ShootController : MonoBehaviour {
 
     private Vector3 shootDir;
 
-    public void Setup(Vector3 shootDir) {
-        this.shootDir = shootDir;
+    public void Setup(Vector3 _shootDir) {
+        shootDir = new Vector3(_shootDir.x, _shootDir.y, 0);
     }
 
     void Start() {
         gm = GameManager.GetInstance();
-        transform.position += new Vector3(1.1f , 0, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -24,10 +23,11 @@ public class ShootController : MonoBehaviour {
                 gm.player2.OnHit();
             }
         }
+        Destroy(gameObject);
     }
 
     private void Update() {
-        float moveSpeed = 0.010f;
-        transform.position += this.shootDir * moveSpeed * Time.deltaTime;
+        float moveSpeed = 2f;
+        transform.position += shootDir * moveSpeed * Time.deltaTime;
     }
 }

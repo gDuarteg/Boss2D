@@ -3,14 +3,22 @@
 public class CameraFollow : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Transform target;
+    public Transform target1;
+    public Transform target2;
 
-    public float smoothSpeed = 0.125f;
+    GameManager gm;
 
-    public Vector3 offset;
+    private void Start() {
+        gm = GameManager.GetInstance();
+    }
 
     private void LateUpdate() {
-        transform.position = target.position + offset;
+        if (gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
+            transform.position = new Vector3(target1.position.x, target1.position.y, transform.position.z);
+        }
+        else if (gm.currentTurn == GameManager.PlayerTurn.PLAYER2) {
+            transform.position = new Vector3(target2.position.x, target2.position.y, transform.position.z);
+        }
     }
 
 
