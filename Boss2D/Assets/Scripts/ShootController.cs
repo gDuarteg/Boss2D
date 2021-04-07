@@ -27,7 +27,9 @@ public class ShootController : MonoBehaviour {
     }
 
     private void Update() {
-        float moveSpeed = 2f;
+        if(gm.gameState != GameManager.GameState.GAME) return;
+
+        float moveSpeed = 3f;
         transform.position += shootDir * moveSpeed * Time.deltaTime;
     }
 }

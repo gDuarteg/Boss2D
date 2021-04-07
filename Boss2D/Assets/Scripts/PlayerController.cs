@@ -29,11 +29,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnHit() {
-        //Debug.Log(Vida);
         Vida--;
-
-        if (Vida <= 0) {
-            Die();
+        
+        if (Vida <= 0 && gm.gameState == GameManager.GameState.GAME) {
+            gm.changeState(GameManager.GameState.ENDGAME);
+            //Die();
         }
     }
 
@@ -73,7 +73,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (!IsMyTurn()) return;
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            gm.changeState(GameManager.GameState.PAUSE);
+        }
+
+        if (!IsMyTurn() || gm.gameState != GameManager.GameState.GAME) return;
         
         Move();
         
