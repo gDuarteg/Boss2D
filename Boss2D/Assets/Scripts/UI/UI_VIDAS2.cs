@@ -14,9 +14,8 @@ public class UI_VIDAS2 : MonoBehaviour
         gm = GameManager.GetInstance();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        textComp.text = $"Player2: {gm.player2.Vida}";
+        textComp.text = $"Bolsonaro: {gm.player2.Vida}";
     }
 }
