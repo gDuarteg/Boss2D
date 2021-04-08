@@ -14,6 +14,11 @@ public class ShootController : MonoBehaviour {
         gm = GameManager.GetInstance();
     }
 
+    private void Explode() {
+        Destroy(gameObject);
+        gm.changeTurn();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (!( collision.gameObject is null )) {
             if (collision.CompareTag("Player1")) {
@@ -23,7 +28,7 @@ public class ShootController : MonoBehaviour {
                 gm.player2.OnHit();
             }
         }
-        Destroy(gameObject);
+        Explode();
     }
 
     private void Update() {
@@ -31,5 +36,9 @@ public class ShootController : MonoBehaviour {
 
         float moveSpeed = 3f;
         transform.position += shootDir * moveSpeed * Time.deltaTime;
+
+        if (transform.position.x >= 50 || transform.position.x <= -50 || transform.position.y <= -12) {
+            Explode();
+        }
     }
 }

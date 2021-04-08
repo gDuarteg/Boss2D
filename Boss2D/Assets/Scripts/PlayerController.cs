@@ -125,10 +125,8 @@ public class PlayerController : MonoBehaviour {
         Move();
 
         // Shoot
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetButtonDown("Fire1") && GameObject.FindWithTag("Bullet") == null) {
             Shoot();
-
-            gm.changeTurn();
         }
 
 
