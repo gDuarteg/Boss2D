@@ -12,6 +12,7 @@ public class ShootController : MonoBehaviour {
 
     void Start() {
         gm = GameManager.GetInstance();
+        gm.DisableBothPlayers();
     }
 
     private void Explode() {

@@ -49,6 +49,11 @@
         }
     }
 
+    public void DisableBothPlayers() {
+        player1.gameObject.GetComponent<PlayerController>().enabled = false;
+        player2.gameObject.GetComponent<PlayerController>().enabled = false;
+    }
+
     public void changeState(GameState nextState) {
         if (gameState != GameState.PAUSE && nextState == GameState.GAME) Reset();
         gameState = nextState;
