@@ -5,6 +5,10 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private GameObject tiro;
 
+    public Vector3 lastStepPosition;
+
+    public int stepCounter = 0;
+
     public int Vida {
         get; set;
     }
@@ -20,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 
     void Start() {
         gm = GameManager.GetInstance();
+        lastStepPosition = transform.position;
         animator = GetComponent<Animator>();
         if (gameObject.tag == "Player1") {
             gm.player1 = this;
@@ -99,8 +104,13 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             gm.changeState(GameManager.GameState.PAUSE);
         }
+        if (transform.position.x >= lastStepPosition.x + 0.5f || transform.position.x <= lastStepPosition.x - 0.5f) {
+            stepCounter += 1;
+            Debug.Log(stepCounter);
+            lastStepPosition = transform.position;
+        }
 
-        RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f, mapa);
+        RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f , mapa);
 
         if (ground.collider != null) {
             isGrounded = true;
