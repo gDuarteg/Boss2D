@@ -129,6 +129,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void GoIdle() {
+        animator.SetBool("isJumping" , false);
+        animator.SetFloat("Velocity" , 0);
+    }
+
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             gm.changeState(GameManager.GameState.PAUSE);
@@ -147,6 +152,7 @@ public class PlayerController : MonoBehaviour {
         // Shoot
         if (Input.GetButtonDown("Fire1") && !GameObject.FindWithTag("Bullet")) {
             Shoot();
+            GoIdle();
         }
 
 
