@@ -3,8 +3,10 @@
 public class ShootController : MonoBehaviour {
 
     GameManager gm;
+    Animator anim;
 
     private Vector3 shootDir;
+    bool exploding;
 
     public void Setup(Vector3 _shootDir) {
         shootDir = new Vector3(_shootDir.x, _shootDir.y, 0);
@@ -12,12 +14,19 @@ public class ShootController : MonoBehaviour {
 
     void Start() {
         gm = GameManager.GetInstance();
+        anim = gameObject.GetComponent<Animator>();
         gm.DisableBothPlayers();
+        exploding = false;
     }
 
     private void Explode() {
-        Destroy(gameObject);
+        exploding = true;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        anim.SetTrigger("EXPLODE");
+    }
+    public void End() {
         gm.changeTurn();
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -35,8 +44,10 @@ public class ShootController : MonoBehaviour {
     private void Update() {
         if(gm.gameState != GameManager.GameState.GAME) return;
 
-        float moveSpeed = 3f;
-        transform.position += shootDir * moveSpeed * Time.deltaTime;
+        if (!exploding) {
+            float moveSpeed = 3f;
+            transform.position += shootDir * moveSpeed * Time.deltaTime;
+        }
 
         if (transform.position.x >= 50 || transform.position.x <= -50 || transform.position.y <= -12) {
             Explode();

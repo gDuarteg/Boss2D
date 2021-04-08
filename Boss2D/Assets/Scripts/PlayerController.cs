@@ -141,6 +141,8 @@ public class PlayerController : MonoBehaviour {
 
         if (stepCounter > 0) {
             Move();
+        } else {
+            GoIdle();
         }
 
         UpdateIsGrounded();
