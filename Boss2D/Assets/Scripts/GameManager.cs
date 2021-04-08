@@ -5,6 +5,8 @@
     public PlayerController player1 { get; set; }
     public PlayerController player2 { get; set; }
 
+    public AudioManager audioMgr;
+
     public enum PlayerTurn {
         PLAYER1, PLAYER2
     }
@@ -37,6 +39,7 @@
             currentTurn = PlayerTurn.PLAYER2;
             player2.gameObject.GetComponent<PlayerController>().enabled = true;
             player2.stepCounter = 25;
+            audioMgr.SetBolsonoaroMusic();
 
             player1.gameObject.GetComponent<PlayerController>().enabled = false;
         }
@@ -44,6 +47,7 @@
             currentTurn = PlayerTurn.PLAYER1;
             player1.gameObject.GetComponent<PlayerController>().enabled = true;
             player1.stepCounter = 25;
+            audioMgr.SetLulaMusic();
 
             player2.gameObject.GetComponent<PlayerController>().enabled = false;
         }
@@ -58,6 +62,19 @@
         if (gameState != GameState.PAUSE && nextState == GameState.GAME) Reset();
         gameState = nextState;
         changeStateDelegate();
+
+        if (gameState == GameState.PAUSE || gameState == GameState.MENU) {
+            audioMgr.PauseAllMusic();
+        }
+
+        if (gameState == GameState.GAME) {
+            if (currentTurn == PlayerTurn.PLAYER1) {
+                audioMgr.SetLulaMusic();
+            }
+            else if (currentTurn == PlayerTurn.PLAYER2) {
+                audioMgr.SetBolsonoaroMusic();
+            }
+        }
     }
 
     private void Reset() {
