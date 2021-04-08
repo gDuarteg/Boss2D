@@ -13,7 +13,11 @@ public class CameraFollow : MonoBehaviour
     }
 
     private void LateUpdate() {
-        if (gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
+        Transform bulletObject = GameObject.FindWithTag("Bullet")?.transform;
+        if (bulletObject) {
+            transform.position = new Vector3(bulletObject.position.x , bulletObject.position.y , transform.position.z);
+        }
+        else if(gm.currentTurn == GameManager.PlayerTurn.PLAYER1) {
             transform.position = new Vector3(target1.position.x, target1.position.y, transform.position.z);
         }
         else if (gm.currentTurn == GameManager.PlayerTurn.PLAYER2) {
