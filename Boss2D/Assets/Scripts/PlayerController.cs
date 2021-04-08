@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour {
 
     public LayerMask mapa;
 
-    private float oneStepSize = 0.5f;
-    private bool isJumping;
-    private bool isGrounded;
+    float oneStepSize = 0.5f;
+    bool isJumping;
+    bool isGrounded;
 
     void Start() {
         gm = GameManager.GetInstance();
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Die() {
-        Destroy(gameObject);
+        gm.changeTurn();
     }
 
     public void OnHit() {
@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour {
             gm.changeState(GameManager.GameState.ENDGAME);
             //Die();
         }
+        if (Vida <= 0)
+            Die();
     }
 
     void Shoot() {
@@ -97,8 +99,6 @@ public class PlayerController : MonoBehaviour {
 
     void Jump() {
         transform.position += new Vector3(0 , 1.2f , 0) * Time.deltaTime * velocidade;
-
-        animator.SetBool("isJumping" , true);
     }
 
     bool IsMyTurn() {
@@ -112,13 +112,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     void UpdateIsGrounded() {
-        RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f , mapa);
-        if (ground.collider != null) {
+        RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 2f , mapa);
+
+        if (ground.collider) {
             isGrounded = true;
+            animator.SetBool("isJumping" , false);
         }
         else {
             isGrounded = false;
-            animator.SetBool("isJumping" , false);
+            animator.SetBool("isJumping" , true);
         }
     }
 
@@ -141,7 +143,8 @@ public class PlayerController : MonoBehaviour {
 
         if (stepCounter > 0) {
             Move();
-        } else {
+        }
+        else {
             GoIdle();
         }
 

@@ -63,7 +63,7 @@
         gameState = nextState;
         changeStateDelegate();
 
-        if (gameState == GameState.PAUSE || gameState == GameState.MENU) {
+        if (gameState == GameState.PAUSE || gameState == GameState.MENU || gameState == GameState.ENDGAME) {
             audioMgr.PauseAllMusic();
         }
 
