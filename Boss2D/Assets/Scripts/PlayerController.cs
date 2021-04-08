@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
 
     public Vector3 lastStepPosition;
 
-    public int stepCounter = 0;
+    public int stepCounter = 25;
 
     public int Vida {
         get; set;
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour {
 
     void UpdateStepCounter() {
         if (transform.position.x >= lastStepPosition.x + oneStepSize || transform.position.x <= lastStepPosition.x - oneStepSize) {
-            stepCounter += 1;
+            stepCounter -= 1;
             lastStepPosition = transform.position;
         }
     }
@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour {
             gm.changeState(GameManager.GameState.PAUSE);
         }
 
-        if (stepCounter > 30) {
+        if (stepCounter <= 0) {
             gm.changeTurn();
         }
 

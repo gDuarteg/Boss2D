@@ -36,14 +36,14 @@
         if (currentTurn == PlayerTurn.PLAYER1) {
             currentTurn = PlayerTurn.PLAYER2;
             player2.gameObject.GetComponent<PlayerController>().enabled = true;
-            player2.stepCounter = 0;
+            player2.stepCounter = 25;
 
             player1.gameObject.GetComponent<PlayerController>().enabled = false;
         }
         else {
             currentTurn = PlayerTurn.PLAYER1;
             player1.gameObject.GetComponent<PlayerController>().enabled = true;
-            player1.stepCounter = 0;
+            player1.stepCounter = 25;
 
             player2.gameObject.GetComponent<PlayerController>().enabled = false;
         }
