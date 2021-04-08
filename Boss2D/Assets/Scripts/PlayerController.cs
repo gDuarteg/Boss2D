@@ -5,15 +5,22 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private GameObject tiro;
 
-    public int Vida { get; set; }
+    public int Vida {
+        get; set;
+    }
 
     Vector3 mousePos;
     Vector3 bulletInitPos;
-    
     GameManager gm;
+    Animator animator;
+
+    public LayerMask mapa;
+    private bool isJumping;
+    private bool isGrounded;
 
     void Start() {
         gm = GameManager.GetInstance();
+        animator = GetComponent<Animator>();
         if (gameObject.tag == "Player1") {
             gm.player1 = this;
         }
@@ -30,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
     public void OnHit() {
         Vida--;
-        
+
         if (Vida <= 0 && gm.gameState == GameManager.GameState.GAME) {
             gm.changeState(GameManager.GameState.ENDGAME);
             //Die();
@@ -38,16 +45,17 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Shoot() {
-        mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        mousePos = new Vector3(Input.mousePosition.x , Input.mousePosition.y , 0);
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
         if (mousePos.x < transform.position.x) {
-            bulletInitPos = transform.position + new Vector3(-1.01f, 0, 0);
-        } else {
-            bulletInitPos = transform.position + new Vector3(1.01f, 0, 0);
+            bulletInitPos = transform.position + new Vector3(-1.01f , 0 , 0);
+        }
+        else {
+            bulletInitPos = transform.position + new Vector3(1.01f , 0 , 0);
         }
 
-        GameObject bulletTransform = Instantiate(tiro, bulletInitPos, Quaternion.identity);
+        GameObject bulletTransform = Instantiate(tiro , bulletInitPos , Quaternion.identity);
         ShootController bulletTeste = bulletTransform.GetComponent<ShootController>();
         bulletTeste.Setup(mousePos - transform.position);
     }
@@ -55,10 +63,25 @@ public class PlayerController : MonoBehaviour {
     void Move() {
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
-        transform.position += new Vector3(inputX, 0, 0) * Time.deltaTime * velocidade;
+        transform.position += new Vector3(inputX , 0 , 0) * Time.deltaTime * velocidade;
+        if (inputX != 0) {
+            animator.SetFloat("Velocity" , 1.0f);
+        }
+        else {
+            animator.SetFloat("Velocity" , 0);
+        }
+        if (inputX < 0 && transform.localRotation.eulerAngles.x != 180) {
+            transform.localRotation = Quaternion.Euler(0 , 180 , 0);
+        }
+        else if (inputX > 0 && transform.localRotation.eulerAngles.y != -180) {
+            transform.localRotation = Quaternion.Euler(0 , 0 , 0);
+        }
+
         // Only allow user to go up (jump)
         if (inputY > 0) {
-            transform.position += new Vector3(0, 1, 0) * Time.deltaTime * velocidade;
+            transform.position += new Vector3(0 , 1 , 0) * Time.deltaTime * velocidade;
+
+            animator.SetBool("isJumping" , true);
         }
     }
 
@@ -77,14 +100,24 @@ public class PlayerController : MonoBehaviour {
             gm.changeState(GameManager.GameState.PAUSE);
         }
 
-        if (!IsMyTurn() || gm.gameState != GameManager.GameState.GAME) return;
-        
+        RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f, mapa);
+        Debug.Log(ground);
+        if (ground.collider != null) {
+            isGrounded = true;
+        }
+        else {
+            isGrounded = false;
+            animator.SetBool("isJumping" , false);
+        }
+        if (!IsMyTurn() || gm.gameState != GameManager.GameState.GAME)
+            return;
+
         Move();
-        
+
         // Shoot
         if (Input.GetButtonDown("Fire1")) {
             Shoot();
-            
+
             gm.changeTurn();
         }
 
