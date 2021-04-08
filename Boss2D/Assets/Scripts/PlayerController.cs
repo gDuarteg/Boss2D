@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     Vector3 mousePos;
     Vector3 bulletInitPos;
     GameManager gm;
-    Animator animator;
+    public Animator animator;
 
     public LayerMask mapa;
 
@@ -134,8 +134,8 @@ public class PlayerController : MonoBehaviour {
             gm.changeState(GameManager.GameState.PAUSE);
         }
 
-        if (stepCounter <= 0) {
-            gm.changeTurn();
+        if (stepCounter > 0) {
+            Move();
         }
 
         UpdateIsGrounded();
@@ -143,7 +143,6 @@ public class PlayerController : MonoBehaviour {
         if (!IsMyTurn() || gm.gameState != GameManager.GameState.GAME)
             return;
 
-        Move();
 
         // Shoot
         if (Input.GetButtonDown("Fire1") && !GameObject.FindWithTag("Bullet")) {
