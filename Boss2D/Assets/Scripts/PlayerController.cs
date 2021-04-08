@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
 
     public LayerMask mapa;
+
+    private float oneStepSize = 0.5f;
     private bool isJumping;
     private bool isGrounded;
 
@@ -69,25 +71,34 @@ public class PlayerController : MonoBehaviour {
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         transform.position += new Vector3(inputX , 0 , 0) * Time.deltaTime * velocidade;
+
+        // If pressing <- or -> arrows, update running animation and step counter
         if (inputX != 0) {
             animator.SetFloat("Velocity" , 1.0f);
+            UpdateStepCounter();
         }
         else {
             animator.SetFloat("Velocity" , 0);
         }
+
+        // If running to the left and character is looking to the right flip
         if (inputX < 0 && transform.localRotation.eulerAngles.x != 180) {
             transform.localRotation = Quaternion.Euler(0 , 180 , 0);
         }
+        // If running to the right and character is looking to the left flip
         else if (inputX > 0 && transform.localRotation.eulerAngles.y != -180) {
             transform.localRotation = Quaternion.Euler(0 , 0 , 0);
         }
 
-        // Only allow user to go up (jump)
         if (inputY > 0) {
-            transform.position += new Vector3(0 , 1.2f , 0) * Time.deltaTime * velocidade;
-
-            animator.SetBool("isJumping" , true);
+            Jump();
         }
+    }
+
+    void Jump() {
+        transform.position += new Vector3(0 , 1.2f , 0) * Time.deltaTime * velocidade;
+
+        animator.SetBool("isJumping" , true);
     }
 
     bool IsMyTurn() {
@@ -100,18 +111,8 @@ public class PlayerController : MonoBehaviour {
         return false;
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            gm.changeState(GameManager.GameState.PAUSE);
-        }
-        if (transform.position.x >= lastStepPosition.x + 0.5f || transform.position.x <= lastStepPosition.x - 0.5f) {
-            stepCounter += 1;
-            Debug.Log(stepCounter);
-            lastStepPosition = transform.position;
-        }
-
+    void UpdateIsGrounded() {
         RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f , mapa);
-
         if (ground.collider != null) {
             isGrounded = true;
         }
@@ -119,13 +120,33 @@ public class PlayerController : MonoBehaviour {
             isGrounded = false;
             animator.SetBool("isJumping" , false);
         }
+    }
+
+    void UpdateStepCounter() {
+        if (transform.position.x >= lastStepPosition.x + oneStepSize || transform.position.x <= lastStepPosition.x - oneStepSize) {
+            stepCounter += 1;
+            lastStepPosition = transform.position;
+        }
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            gm.changeState(GameManager.GameState.PAUSE);
+        }
+
+        if (stepCounter > 30) {
+            gm.changeTurn();
+        }
+
+        UpdateIsGrounded();
+
         if (!IsMyTurn() || gm.gameState != GameManager.GameState.GAME)
             return;
 
         Move();
 
         // Shoot
-        if (Input.GetButtonDown("Fire1") && GameObject.FindWithTag("Bullet") == null) {
+        if (Input.GetButtonDown("Fire1") && !GameObject.FindWithTag("Bullet")) {
             Shoot();
         }
 
