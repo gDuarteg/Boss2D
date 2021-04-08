@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour {
 
         // Only allow user to go up (jump)
         if (inputY > 0) {
-            transform.position += new Vector3(0 , 1 , 0) * Time.deltaTime * velocidade;
+            transform.position += new Vector3(0 , 1.2f , 0) * Time.deltaTime * velocidade;
 
             animator.SetBool("isJumping" , true);
         }
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         RaycastHit2D ground = Physics2D.Raycast(transform.position , Vector2.down , 0.4f, mapa);
-        Debug.Log(ground);
+
         if (ground.collider != null) {
             isGrounded = true;
         }
