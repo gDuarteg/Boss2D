@@ -141,6 +141,11 @@ public class PlayerController : MonoBehaviour {
             gm.changeState(GameManager.GameState.PAUSE);
         }
 
+        if(transform.position.y < -25) {
+            Vida = 0;
+            OnHit();
+        }
+
         if (stepCounter > 0) {
             Move();
         }

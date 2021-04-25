@@ -76,9 +76,9 @@
 
     private void Reset() {
         player1.Vida = 5;
-        player1.transform.position = new UnityEngine.Vector3(-17.45f, 2, 0);
+        player1.transform.position = new UnityEngine.Vector3(-22.4f, 8.5f, 0);
         
         player2.Vida = 5;
-        player2.transform.position = new UnityEngine.Vector3(16.45f, 2, 0);
+        player2.transform.position = new UnityEngine.Vector3(19.5f, 8.5f, 0);
     }
 }
