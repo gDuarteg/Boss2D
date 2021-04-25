@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class UI_ENDGAME : MonoBehaviour
 {
     public Text message;
-    public Sprite vencedor1;
-    public Sprite vencedor2;
+    //public Sprite vencedor1;
+    //public Sprite vencedor2;
 
     GameManager gm;
 
@@ -18,12 +18,12 @@ public class UI_ENDGAME : MonoBehaviour
         if (gm.gameState != GameManager.GameState.ENDGAME) return;
 
         if (gm.player1.Vida <= 0) {
-            actual_Image.sprite = vencedor2;
-            message.text = $"Bolsonaro Venceu !!!";
+            //actual_Image.sprite = vencedor2;
+            message.text = $"Player2 Venceu !!!";
         }
         else if (gm.player2.Vida <= 0) {
-            message.text = $"Lula Venceu !!!";
-            actual_Image.sprite = vencedor1;
+            message.text = $"Player1 Venceu !!!";
+            //actual_Image.sprite = vencedor1;
         }
     }
 

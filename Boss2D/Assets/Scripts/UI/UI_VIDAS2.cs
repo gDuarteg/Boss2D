@@ -16,6 +16,6 @@ public class UI_VIDAS2 : MonoBehaviour
 
     void Update()
     {
-        textComp.text = $"Bolsonaro: {gm.player2.Vida}";
+        textComp.text = $"Player2: {gm.player2.Vida}";
     }
 }
