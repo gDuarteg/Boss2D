@@ -5,6 +5,10 @@ public class ShootController : MonoBehaviour {
     GameManager gm;
     Animator anim;
 
+    public float fieldOfImpact;
+    public float force;
+    public LayerMask layerToHit;
+
     private Vector3 shootDir;
     bool exploding;
 
@@ -23,7 +27,28 @@ public class ShootController : MonoBehaviour {
         exploding = true;
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
         anim.SetTrigger("EXPLODE");
+
+        Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, fieldOfImpact, layerToHit);
+       
+        foreach (Collider2D obj in objects) {
+            if (obj.CompareTag("Player1")) {
+                Vector2 expDir = new Vector2(-fieldOfImpact + obj.transform.position.x - transform.position.x, -fieldOfImpact + obj.transform.position.y - transform.position.y);
+                //Debug.Log(expDir);
+                obj.GetComponent<Rigidbody2D>().AddForce((expDir) * force);
+            }
+           else if (obj.CompareTag("Player2")) {
+                Vector2 expDir = new Vector2(fieldOfImpact - obj.transform.position.x + transform.position.x, fieldOfImpact - obj.transform.position.y + transform.position.y);
+                //Debug.Log(expDir);
+                obj.GetComponent<Rigidbody2D>().AddForce((expDir) * force);
+            }
+        }
     }
+
+    //private void OnDrawGizmosSelected() {
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, fieldOfImpact);
+    //}
+
     public void End() {
         gm.changeTurn();
         Destroy(gameObject);
