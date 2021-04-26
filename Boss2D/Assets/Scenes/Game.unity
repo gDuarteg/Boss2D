@@ -940,7 +940,7 @@ PrefabInstance:
         type: 3}
       propertyPath: HealthBar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1657998134}
     - target: {fileID: 1396284543174740203, guid: c09332f8125433641bc58210505e82ed,
         type: 3}
       propertyPath: mapa.m_Bits
@@ -8405,7 +8405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1346, y: 377}
+  m_AnchoredPosition: {x: -745, y: 38}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1640224075
@@ -8443,6 +8443,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640224073}
   m_CullTransparentMesh: 1
+--- !u!114 &1657998134 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 964640270980632166, guid: 32a11074acf4b6b46bb85a70e320c23b,
+    type: 3}
+  m_PrefabInstance: {fileID: 950865533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ee4619720a6e24cadda73135c5e7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1673855914
 GameObject:
   m_ObjectHideFlags: 0
