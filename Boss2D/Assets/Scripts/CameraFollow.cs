@@ -6,9 +6,11 @@ public class CameraFollow : MonoBehaviour {
     public Transform target2;
 
     GameManager gm;
+    public GameObject minimapCamera;
 
     private void Start() {
         gm = GameManager.GetInstance();
+        minimapCamera.SetActive(false);
     }
 
     private void LateUpdate() {
@@ -19,6 +21,11 @@ public class CameraFollow : MonoBehaviour {
             transform.position = new Vector3(target1.position.x, target1.position.y, transform.position.z);
         } else if ( gm.currentTurn == GameManager.PlayerTurn.PLAYER2 ) {
             transform.position = new Vector3(target2.position.x, target2.position.y, transform.position.z);
+        }
+        if ( !minimapCamera.activeSelf && gm.gameState == GameManager.GameState.GAME ) {
+            minimapCamera.SetActive(true);
+        } else if ( minimapCamera.activeSelf && gm.gameState != GameManager.GameState.GAME ) {
+            minimapCamera.SetActive(false);
         }
     }
 
