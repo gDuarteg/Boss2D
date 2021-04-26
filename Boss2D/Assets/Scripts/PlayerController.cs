@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
             gm.changeState(GameManager.GameState.PAUSE);
         }
 
