@@ -9,9 +9,13 @@ public class PlayerController : MonoBehaviour {
 
     public int stepCounter = 25;
 
+    public HealthBarBehaviour HealthBar;
+
     public int Vida {
         get; set;
     }
+
+    private int MaxVida = 5;
 
     Vector3 mousePos;
     Vector3 bulletInitPos;
@@ -36,6 +40,7 @@ public class PlayerController : MonoBehaviour {
             gameObject.GetComponent<PlayerController>().enabled = false;
         }
         Vida = 5;
+        HealthBar.SetHealth(Vida, MaxVida);
     }
 
     void Die() {
@@ -44,6 +49,7 @@ public class PlayerController : MonoBehaviour {
 
     public void OnHit() {
         Vida--;
+        HealthBar.SetHealth(Vida, MaxVida);
 
         if (Vida <= 0 && gm.gameState == GameManager.GameState.GAME) {
             gm.changeState(GameManager.GameState.ENDGAME);
