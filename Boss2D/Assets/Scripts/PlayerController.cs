@@ -146,8 +146,8 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
             gm.changeState(GameManager.GameState.PAUSE);
         }
-
-        if(transform.position.y < -25) {
+        HealthBar.SetHealth(Vida, MaxVida);
+        if (transform.position.y < -25) {
             Vida = 0;
             OnHit();
         }
